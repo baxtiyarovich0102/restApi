@@ -46,10 +46,28 @@ const removeStudent = (req, res) => {
     })
 }
 
+const updateStudent = (req, res) => {
+    const id = parseInt(req.params.id)
+    const {name} = req.body
+
+    pool.query(queries.getStudentById, [id], (err, result) => {
+        const notFound = !result.rows.length
+        if(notFound){
+            res.send("Student does not exist")
+        }
+
+        pool.query(queries.updateStudent, [name, id], (err, result) => {
+            if(err) throw err;
+            res.status(200).send("Updated!")
+        })
+    })
+}
+
 
 module.exports = {
     getStudents,
     getStudentById,
     addStudent,
-    removeStudent
+    removeStudent,
+    updateStudent
 }
