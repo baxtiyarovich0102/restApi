@@ -1,6 +1,13 @@
 const express = require("express")
+const studentsRouter = require("./src/student/routes")
+
 const app =express()
-const port = 3000
+const port = 5000
 
+app.get("/", (req, res) => {
+    res.send("Xaxa")
+})
 
-app.listen(port, () => console.log())
+app.use("/api/v1/students", studentsRouter)
+
+app.listen(port, () => console.log("Listening on port", port))
